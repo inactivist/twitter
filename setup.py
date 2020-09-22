@@ -7,7 +7,7 @@ try:
 except ImportError:
     long_description = open('./README', 'r').read()
 
-version = '1.18.0'
+version = '1.18.1'
 
 setup(name='twitter',
       version=version,
