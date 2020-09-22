@@ -105,9 +105,9 @@ def load_tweets(filename):
     for line in archive.readlines():
         try:
             tid, text = line.strip().split(" ", 1)
-            tweets[int(tid)] = text.decode("utf-8")
+            tweets[int(tid)] = text
         except Exception as e:
-            err("loading tweet %s failed due to %s" % (line, unicode(e)))
+            err("loading tweet %s failed due to %s" % (line, e))
 
     archive.close()
     return tweets
@@ -135,9 +135,9 @@ def save_tweets(filename, tweets):
 
     for k in sorted(tweets.keys()):
         try:
-            archive.write("%i %s\n" % (k, tweets[k].encode('utf-8')))
+            archive.write("%i %s\n" % (k, tweets[k]))
         except Exception as ex:
-            err("archiving tweet %s failed due to %s" % (k, unicode(ex)))
+            err("archiving tweet %s failed due to %s" % (k, ex))
 
     archive.close()
 
@@ -340,11 +340,11 @@ def main(args=sys.argv[1:]):
 
     # authenticate using OAuth, asking for token if necessary
     if options['oauth']:
-        oauth_filename = (os.environ.get('HOME', 
-                          os.environ.get('USERPROFILE', '')) 
+        oauth_filename = (os.environ.get('HOME',
+                          os.environ.get('USERPROFILE', ''))
                           + os.sep
                           + '.twitter-archiver_oauth')
-        
+
         if not os.path.exists(oauth_filename):
             oauth_dance("Twitter-Archiver", CONSUMER_KEY, CONSUMER_SECRET,
                         oauth_filename)
